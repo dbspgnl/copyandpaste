@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -139,5 +140,153 @@ namespace CopyAndPaste
                 }
             }
         }
+
+        #region : menu strip
+
+        private void 저장하기ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fFileSave();
+        }
+
+        private void 불러오기ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void 종료ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fFileLoad();
+        }
+
+        private void 공백제거ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fEmptyDelete();
+        }
+
+        private void 모두삭제ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fAlldDelete();
+        }
+
+        private void 정보StripMenuItem1_Click(object sender, EventArgs e)
+        {
+            fProgramInfo();
+        }
+
+        #endregion
+
+        #region : context menu
+
+        private void 공백제거ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            fEmptyDelete();
+        }
+
+        private void 저장하기ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            fFileSave();
+        }
+
+        private void 불러오기ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            fFileLoad();
+        }
+
+        private void 모두삭제ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            fAlldDelete();
+        }
+
+        private void 프로그램정보ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fProgramInfo();
+        }
+
+        #endregion
+
+        #region : function
+
+        private void fEmptyDelete()
+        {
+            int iCount = lboxTextSave.Items.Count;
+
+            for (int i = 0; i < iCount; i++)
+            {
+                lboxTextSave.Items[i] = lboxTextSave.Items[i].ToString().Trim();
+            }
+        }
+
+        private void fAlldDelete()
+        {
+            if(DialogResult.Yes == MessageBox.Show("등록되어 있는 Data를 초기화 합니다.", "ListBox Item Clear", MessageBoxButtons.YesNo))
+            {
+                lboxTextSave.Items.Clear();
+            }
+        }
+
+        private void fFileSave()
+        {
+            SaveFileDialog SFDialog = new SaveFileDialog();
+
+            int ilbCount = lboxTextSave.Items.Count;
+            string strFilePath = string.Empty;
+
+            SFDialog.InitialDirectory = Application.StartupPath;
+            SFDialog.FileName = "*.txt";
+            SFDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+
+            try
+            {
+                if (SFDialog.ShowDialog() == DialogResult.OK)
+                {
+                    strFilePath = SFDialog.FileName;
+                    StreamWriter swSFDialog = new StreamWriter(strFilePath);
+
+                    for (int i = 0; i < ilbCount; i++)
+                    {
+                        swSFDialog.WriteLine(lboxTextSave.Items[i].ToString());
+                    }
+                    swSFDialog.Close();
+                    MessageBox.Show("저장이 완료 되었습니다.");
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            
+        }
+
+        private void fFileLoad()
+        {
+            OpenFileDialog OFDialog = new OpenFileDialog();
+
+            string strFilePath = string.Empty;
+
+            OFDialog.InitialDirectory = Application.StartupPath;
+            OFDialog.FileName = "*.txt";
+            OFDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+
+            try
+            {
+                if (OFDialog.ShowDialog() == DialogResult.OK)
+                {
+                    strFilePath = OFDialog.FileName;
+                    StreamReader srOFDialog = new StreamReader(strFilePath, Encoding.UTF8, true);
+
+                    while (srOFDialog.EndOfStream == false)
+                    {
+                        lboxTextSave.Items.Add(srOFDialog.ReadLine());
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void fProgramInfo()
+        {
+            string strProgramInfo = "Copy&Paste C# Program Reference Doridori";
+            MessageBox.Show(strProgramInfo);
+        }
+
+        #endregion
+
     }
 }
