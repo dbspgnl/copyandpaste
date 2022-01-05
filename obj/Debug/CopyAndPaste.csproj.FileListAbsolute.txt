@@ -8,3 +8,4 @@ C:\Users\user\source\repos\CopyAndPaste\CopyAndPaste\obj\Debug\CopyAndPaste.cspr
 C:\Users\user\source\repos\CopyAndPaste\CopyAndPaste\obj\Debug\CopyAndPaste.csproj.CoreCompileInputs.cache
 C:\Users\user\source\repos\CopyAndPaste\CopyAndPaste\obj\Debug\CopyAndPaste.exe
 C:\Users\user\source\repos\CopyAndPaste\CopyAndPaste\obj\Debug\CopyAndPaste.pdb
+C:\Users\user\source\repos\CopyAndPaste\CopyAndPaste\obj\Debug\CopyAndPaste.csproj.AssemblyReference.cache

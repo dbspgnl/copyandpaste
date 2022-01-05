@@ -39,6 +39,7 @@
             this.lboxTextSave.Name = "lboxTextSave";
             this.lboxTextSave.Size = new System.Drawing.Size(199, 196);
             this.lboxTextSave.TabIndex = 0;
+            this.lboxTextSave.SelectedIndexChanged += new System.EventHandler(this.lboxTextSave_SelectedIndexChanged);
             // 
             // Form1
             // 
